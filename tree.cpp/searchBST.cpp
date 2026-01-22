@@ -17,55 +17,56 @@ struct TreeNode {
 
 class Solution{
     public:
-    // TreeNode* searchBST(TreeNode* root, int val) {
-    //     if (root==NULL) return NULL;
-    //     queue<TreeNode*>q;
-    //     q.push(root);
-    //     while(!q.empty()){
-    //         TreeNode* temp = q.front();
-    //         q.pop();
-    //         if(temp==NULL) continue;
-    //         if(temp->val == val) return temp;
-    //         if(temp->val > val && temp->left!=NULL){
-    //             q.push(temp->left);
-    //         } else if(temp->val < val && temp->right){
-    //             q.push(temp->right);
+    // int ceilValue(TreeNode* root, int key){
+    //     int ceil =-1;
+    //     TreeNode* temp = root;
+    //     while(temp!=NULL){
+    //         if(temp->val == key) {
+    //             ceil = temp->val;
+    //             return ceil;
     //         }
-            
+    //         if(temp->val< key){
+    //             temp = temp->right;
+    //         } else {
+    //             ceil = temp->val;
+    //             temp = temp->left;
+    //         }
     //     }
-    //     return NULL;
+    //     return ceil;
     // }
 
-    // TreeNode* searchBST(TreeNode* root, int val){
-    //     if(root==NULL || root->val==val) return root;
-    //     if(root->val > val) return searchBST(root->left, val);
-    //     return searchBST(root->right, val);
-    // }
-
-    TreeNode* searchBST(TreeNode* root, int val){
+    int floorValue(TreeNode* root, int key){
+        int floor = -1;
         TreeNode* temp = root;
         while(temp!=NULL){
-            if(temp->val==val) return temp;
-            if(temp->val > val) temp= temp->left;
-            else temp = temp->right;
+            if(temp->val==key) {
+                floor = temp->val;
+                return floor;
+            }
+            if(temp->val > key){
+                temp= temp->left;
+            } else{
+                floor = temp->val;
+                temp= temp->right;
+            }
         }
-        return NULL;
+        return floor;
     }
 };
 
 int main(){
-    TreeNode* root = new TreeNode(4);
-    root->left = new TreeNode(2);
-    root->left->left = new TreeNode(1);
-    root->left->right = new TreeNode(3);
-    root->right = new TreeNode(7); 
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(5);
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(8);
+    root->left->right->left = new TreeNode(6);
+    root->right = new TreeNode(15); 
+    root->right->right = new TreeNode(13); 
+    root->right->left = new TreeNode(17); 
 
     Solution sol;
-    TreeNode*ans =sol.searchBST(root, 2);
-    if(ans != NULL)
-    cout << ans->val << endl;
-    else
-    cout << "Not found" << endl;
+    int ans = sol.floorValue(root, 9);
+    cout<<ans;
 
 
     return 0;
