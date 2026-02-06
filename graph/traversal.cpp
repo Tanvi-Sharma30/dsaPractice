@@ -3,7 +3,8 @@
 #include<vector>
 using namespace std;
 
-class Solution {
+// BFS Traversal
+/*class Solution {
     public:
     vector<int> bfs(int v, vector<int> adj[]){
         vector<int> vis(v, 0);
@@ -24,5 +25,25 @@ class Solution {
             }
         }
         return bfs;
+    }
+};*/
+
+// DFs traversal
+
+class Solution{
+    public:
+    void dfs(int node ,vector<int>adj[], vector<int> &vis, vector<int>&ls){
+        vis[node]=1;
+        ls.push_back(node);
+        for(auto it:adj[node]){
+            if(!vis[it]) dfs(it,adj,vis, ls);
+        }
+    }
+    vector<int> dfsOfGraph(int v, vector<int>adj[]){
+        vector<int>vis(v,0);
+        int start =1;
+        vector<int> ls;
+        dfs(start, adj, vis,ls);
+        return ls;
     }
 };
