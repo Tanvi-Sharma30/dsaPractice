@@ -31,7 +31,6 @@ Node* convert2LL(vector<int> &arr){
     }
     return head;
 }
-
 void print(Node* head){
     while(head!=NULL) {
         cout<<head->data<<" ";
