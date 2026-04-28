@@ -3,7 +3,7 @@
 #include<queue>
 #include<map>
 #include<string>
-#include <sstream>
+#include <set>
 using namespace std;
 
 struct TreeNode {
@@ -17,38 +17,32 @@ struct TreeNode {
 
 class Solution{
     public:
-     TreeNode* deleteNode(TreeNode* root, int key) {
-        if(root==NULL) return NULL;
-        if(root->val==key) return helper(root);
-        TreeNode* temp = root;
-        while(temp!=NULL){
-            if(temp->val>key){
-                if(temp->left!=NULL && temp->left->val==key){
-                    temp->left = helper(temp->left);
-                } else temp = temp->left;
-            } else {
-                if(temp->right!=NULL && temp->right->val == key){
-                    temp->right = helper(temp->right);
-                } else temp = temp->right;
+        int kthSmallest(TreeNode* root, int k) {
+            if(root==NULL) return 0;
+            set<int> s;
+            queue<TreeNode*> q;
+            q.push(root);
+            s.insert(root->val);
+            while(true){
+                TreeNode* temp = q.front();
+                q.pop();
+                if(temp->left) {
+                    q.push(temp->left);
+                    s.insert(temp->left->val);
+                }
+                if(root->right) {
+                    q.push(root->right);
+                    s.insert(root->left->val);
+                }
             }
+            int count = 1;
+            for(auto it = s.begin(); it != s.end(); it++) {
+                if(count == k) {
+                return *it;
+            }
+            count++;
         }
-        return root;
-    }
-
-    TreeNode* helper(TreeNode* root){
-        TreeNode* temp = root;
-        if(root->left==NULL) return root->right;
-        if(root->right==NULL) return root->left;
-        TreeNode* rightChild = root->right;
-        TreeNode* lastChild = findLast(root->left);
-        lastChild->right = rightChild;
-
-    return root;
-    }
-
-    TreeNode* findLast(TreeNode* root){
-        if(root->right == NULL) return root;
-        return findLast(root->right);
+        return 0;
     }
 };
 
@@ -63,7 +57,7 @@ int main(){
     root->right->left = new TreeNode(17); 
 
     Solution sol;
-    TreeNode* ans = sol.deleteNode(root,5);
+    int ans = sol.kthSmallest(root,5);
     cout<<ans;
 
 
